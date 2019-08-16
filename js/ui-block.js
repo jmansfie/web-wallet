@@ -108,7 +108,8 @@ var uiBlock = function () {
                 iconAddress: iconAddress,
                 logoMain: logoMain,
                 numberComma: numberComma,
-                selectWalletFile: selectWalletFile
+                selectWalletFile: selectWalletFile,
+                selectLedgerWallet: selectLedgerWallet
             }, i;
 
         for (i in dic) if (i in bag)
@@ -335,6 +336,25 @@ var uiBlock = function () {
                 $this.addClass("active");
                 var inputs = $(".number-comma input");
                 inputs.trigger("input");
+            }
+        }
+
+        function selectLedgerWallet(selector, callback) {
+            var mAccount;
+
+            i18n.run($(selector)
+                .addClass("select-ledger-wallet")
+                .html(
+                "<p data-i18n=sw/name></p>" +
+                '<label class="file empty"><span data-i18n=sw/button></span><input type=button></label>'
+                )
+                .on("click", "input[type=button]", onClick));
+
+            function onClick() {
+                alert("Not available yet.");
+
+                //$(".select-ledger-wallet label.file > span").text("wallet address");
+                //callback(mAccount);
             }
         }
 

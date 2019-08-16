@@ -44,7 +44,25 @@
 <body>
     <div class=logo-main></div>
     <div class=header></div>
-    <div class="container select-wallet-file"></div>
+
+    <div class="container">
+        <ul id=tabs id=myTab role=tablist>
+            <li class="current ccc">
+                <a href=# title=tab1 data-i18n=wallet-info/json></a>
+            </li>
+            <li>
+                <a href=# title=tab2 data-i18n=wallet-info/ledger></a>
+            </li>
+        </ul>
+        <div id="content">
+            <div class="show tab" id=tab1>
+                <div class="select-wallet-file"></div>
+            </div>
+            <div class="tab" id=tab2>
+                <div class="select-ledger-wallet"></div>
+            </div>
+        </div>
+    </div>
 
     <div id=send class="container send">
         <div class="form-group row">
@@ -181,7 +199,55 @@
             neb = new nebulas.Neb(),
             validateAll = uiBlock.validate(),
             gLastGenerateInfo = {},
-            gAccount, gTx;
+            gAccount, gTx, gWalletType;
+
+        $("#tabs a").click(function (e) {
+            e.preventDefault();
+
+            if(!$(this).parent().hasClass("ccc")) {
+                closeWallet();
+            }
+
+            $("#tabs li").removeClass("ccc");
+            $(this).parent().addClass("ccc");
+            $("#content div").removeClass("show");
+            $("#" + $(this).attr("title")).addClass("show");
+            $(this).addClass("current");
+        });
+
+        $("#tabs a").hover(function () {
+            if (!$(this).parent().hasClass("current")) {
+                $(this).parent().addClass("hoverItem");
+            }
+        }, function () {
+            $(this).parent().removeClass("hoverItem");
+        });
+
+        function closeWallet()
+        {
+            $("#transaction").hide();
+            $("#receipt_div").hide();
+            $("#unlock").hide();
+
+            $("#balance").val("");
+            $(".icon-address.from input").val("");
+            $(".icon-address.to input").val("");
+            $("#amount").val("");
+            $("#nonce").val("");
+
+            $(".pass input[type=password]").val("");
+            $(".select-wallet-file label.pass").addClass("hide");
+            $(".select-wallet-file label.file").addClass("empty");
+            $(".select-wallet-file .file span").attr("data-i18n","swf/button");
+
+            $(".select-ledger-wallet label.pass").addClass("hide");
+            $(".select-ledger-wallet label.file").addClass("empty");
+            $(".select-ledger-wallet .file span").attr("data-i18n","sw/button");
+
+            i18n.run($(".file"));
+
+            gWalletType = null;
+        }
 
         neb.setRequest(new nebulas.HttpRequest(localSave.getItem("apiPrefix") || "https://testnet.nebulas.io/"));
         $("#generate").on("click", onClickGenerate);
@@ -194,7 +260,8 @@
             iconAddress: ".icon-address",
             logoMain: ".logo-main",
             numberComma: ".number-comma",
-            selectWalletFile: [".select-wallet-file", onUnlockFile]
+            selectWalletFile: [".select-wallet-file", onUnlockFile],
+            selectLedgerWallet: [".select-ledger-wallet", onSelectLedger]
         });
 
         function onCurrencyChanged() {
@@ -202,10 +269,32 @@
         }
         uiBlock.addCurrencyChangedListener(onCurrencyChanged);
 
+        function onSelectLedger(account)
+        {
+            gWalletType = 1;
+            loadAccount(null, null, account, null);
+        }
+
         function onUnlockFile(swf, fileJson, account, password) {  //TODO: 对外函数不要用简称
+            try {
+                gWalletType = 0;
+                account.fromKey(fileJson, password);
+                loadAccount(swf, fileJson, account, password);
+            } catch (e) {
+                // this catches e thrown by nebulas.js!account
+                bootbox.dialog({
+                    backdrop: true,
+                    onEscape: true,
+                    message: localSave.getItem("lang") == "en" ? e : "keystore 文件错误, 或者密码错误",
+                    size: "large",
+                    title: "Error"
+                });
+            }
+        }
+
+        function loadAccount(swf, fileJson, account, password) {
             var address;
             try {
-                account.fromKey(fileJson, password);
                 address = account.getAddressString();
                 gAccount = account;
 
@@ -215,7 +304,6 @@
 
                 updateBalance();
             } catch (e) {
-                // this catches e thrown by nebulas.js!account
                 bootbox.dialog({
                     backdrop: true,
                     onEscape: true,
@@ -337,7 +425,13 @@
                             var contract = {"source": "", "sourceType": "js", "function": "transfer", "args": "[\"" + toAddress + "\", \"" + Unit.nasToBasic(Utils.toBigNumber(amount)).toString(10) + "\"]", "binary": "", "type": "call"};
                             gTx = new Transaction(parseInt(localSave.getItem("chainId")), gAccount, uiBlock.getContractAddr(uiBlock.currency), Unit.nasToBasic(Utils.toBigNumber("0")), parseInt(nonce), gasprice, gaslimit, contract);
                         }
-                        gTx.signTransaction();
+
+                        gTx = signTransaction(gTx);
+
+                        if(gTx == null)
+                        {
+                            throw new Error("Unable to sign transaction!");
+                        }
 
                         $("#raw").val(gTx.toString());
                         $("#signed").val(gTx.toProtoString());
@@ -364,6 +458,20 @@
                             title: "Error"
                         });
                     }
+            }
+        }
+
+        function signTransaction(gTx)
+        {
+            // Keystore / JSON file
+            if(gWalletType == 0) {
+                gTx.signTransaction();
+                return gTx;
+            }
+            // Ledger Wallet
+            else if(gWalletType == 1) {
+                alert("Not available yet.");
+                return null;
             }
         }
 

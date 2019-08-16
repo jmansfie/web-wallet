@@ -88,6 +88,8 @@ var i18n = function () {
 			"send-offline/step1": "Step 1: Inquire Information (Online Computer)",
 			"send-offline/step2": "Step 2: Generate Transaction (Offline Computer)",
 			"send-offline/step3": "Step 3: Send / Publish Transaction (Online Computer)",
+			"sw/button": "CONNECT TO LEDGER WALLET...",
+			"sw/name": "Connect to Ledger Wallet:",
 			"swf/button": "SELECT WALLET FILE...",
 			"swf/good": "Your wallet is encrypted. Good! Please enter the password.",
 			"swf/modal/select/message": "please upload your wallet file, thanks",
@@ -106,7 +108,9 @@ var i18n = function () {
 			"wallet-info/acc-addr": "Account Address",
 			"wallet-info/acc-balance": "Account Balance",
 			"wallet-info/private-key": "Private Key (unencrypted)",
-			"wallet-info/your-addr": "Your Address"
+			"wallet-info/your-addr": "Your Address",
+			"wallet-info/json": "Keystore / JSON File",
+			"wallet-info/ledger": "Ledger Wallet"
 		},
 		es: {
 			amount: "Cantidad",
@@ -185,6 +189,8 @@ var i18n = function () {
 			"send-offline/step1": "Paso 1: Solicitar información (computadora en línea)",
 			"send-offline/step2": "Paso 2: Generar transacción (computadora desconectada)",
 			"send-offline/step3": "Paso 3: Enviar / publicar transacción (computadora en línea)",
+			"sw/button": "CONECTAR A LEDGER WALLET...",
+			"sw/name": "Conectar a Ledger Wallet:",
 			"swf/button": "SELECCIONE EL ARCHIVO DE SU CARTERA...",
 			"swf/good": "Su cartera ha sido encriptada. ¡Bien! Ingrese su contraseña.",
 			"swf/modal/select/message": "por favor, suba el archivo de su cartera, gracias",
@@ -203,7 +209,9 @@ var i18n = function () {
 			"wallet-info/acc-addr": "Dirección de la cuenta",
 			"wallet-info/acc-balance": "Balance de la cuenta",
 			"wallet-info/private-key": "Clave privada (sin encriptar)",
-			"wallet-info/your-addr": "Su dirección"
+			"wallet-info/your-addr": "Su dirección",
+			"wallet-info/json": "Keystore / JSON File",
+			"wallet-info/ledger": "Ledger Wallet"
 		},
 		zh: {
 			amount: "金额",
@@ -280,6 +288,8 @@ var i18n = function () {
 			"send-offline/step1": "第 1 步：查询信息（联网）",
 			"send-offline/step2": "第 2 步：生成信息（单机）",
 			"send-offline/step3": "第 3 步：发送 / 发布交易（联网）",
+			"sw/button": "CONNECT TO LEDGER WALLET...",
+			"sw/name": "Connect to Ledger Wallet:",
 			"swf/button": "选择钱包文件...",
 			"swf/good": "你的钱包加密了，好！请输入密码。",
 			"swf/modal/select/message": "请上传您的钱包文件，谢谢",
@@ -298,7 +308,9 @@ var i18n = function () {
 			"wallet-info/acc-addr": "钱包地址",
 			"wallet-info/acc-balance": "钱包余额",
 			"wallet-info/private-key": "私钥（未加密）",
-			"wallet-info/your-addr": "你的地址"
+			"wallet-info/your-addr": "你的地址",
+			"wallet-info/json": "Keystore / JSON File",
+			"wallet-info/ledger": "Ledger Wallet"
 		},
 		ko: {
 			amount: "양",
@@ -377,6 +389,8 @@ var i18n = function () {
 			"send-offline/step1": "1단계: 정보 조회 (온라인 컴퓨터)",
 			"send-offline/step2": "2단계: 트랜잭션 생성 (오프라인 컴퓨터)",
 			"send-offline/step3": "3단계: 트랜잭션 전송 / 게재 (온라인 컴퓨터)",
+			"sw/button": "Ledger  지갑에 연결하기...",
+			"sw/name": "Ledger 지갑에 연결하기:",
 			"swf/button": "지갑 파일을 선택해주세요...",
 			"swf/good": "지갑은 암호화됩니다. 비밀번호를 입력해주세요.",
 			"swf/modal/select/message": "지갑 파일을 업로드해주세요.",
@@ -395,7 +409,9 @@ var i18n = function () {
 			"wallet-info/acc-addr": "지갑 주소",
 			"wallet-info/acc-balance": "지갑 잔액",
 			"wallet-info/private-key": "프라이빗 키 (암호화되지 않음)",
-			"wallet-info/your-addr": "당신의 주소"
+			"wallet-info/your-addr": "당신의 주소",
+			"wallet-info/json": "Keystore / JSON File",
+			"wallet-info/ledger": "Ledger Wallet"
 		},
 	};
 

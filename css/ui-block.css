@@ -152,7 +152,7 @@ body {
     ============================================================
     */
 
-.select-wallet-file label.file {
+.select-wallet-file label.file, .select-ledger-wallet label.file {
     background-color: #f5f5f5;
     border-radius: 3px;
     cursor: pointer;
@@ -166,11 +166,11 @@ body {
     text-overflow: ellipsis;
 }
 
-.select-wallet-file .empty {
+.select-wallet-file .empty, .select-ledger-wallet .empty {
     border: 1px solid red;
 }
 
-.select-wallet-file input[type=file] {
+.select-wallet-file input[type=file], .select-ledger-wallet input[type=button] {
     display: none;
 }
 

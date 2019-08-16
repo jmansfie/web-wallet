@@ -190,3 +190,55 @@ label > i {
     margin-bottom: 0;
     margin-top: 0;
 }
+
+
+#tabs {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#tabs li {
+    float: left;
+    margin: 0;
+}
+
+#tabs li a {
+    position: relative;
+    padding: 10px 50px;
+    float: left;
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.tab {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+#content {
+    border-top: 1px solid;
+    padding-top: 10px;
+}
+
+.hoverItem a {
+    background: black;
+    color: #fff;
+}
+
+.ccc {
+    background-color: black;
+}
+
+.ccc a {
+    color: #fff;
+}
+
+.current a {
+    outline: 0;
+    z-index: 4;
+}
