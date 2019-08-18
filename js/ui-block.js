@@ -351,10 +351,32 @@ var uiBlock = function () {
                 .on("click", "input[type=button]", onClick));
 
             function onClick() {
-                alert("Not available yet.");
+                var ledgerCallback = function(response) {
+                    if(response instanceof Error)
+                    {
+                        bootbox.dialog
+                        ({
+                            backdrop: true,
+                            onEscape: true,
+                            message: response.message,
+                            size: "large",
+                            title: "Error"
+                        });
+                    }
+                    else
+                    {
+                        console.log(response);
+                        mAccount = Account.fromAddress(response.address);
+                        $(".select-ledger-wallet label.file > span").text(response.address);
+                        $(".select-ledger-wallet label.pass").removeClass("hide");
+                        $(".select-ledger-wallet label.file").removeClass("empty");
 
-                //$(".select-ledger-wallet label.file > span").text("wallet address");
-                //callback(mAccount);
+                        callback(mAccount);
+                    }
+                };
+
+                var nebLedgerUSB = new NebLedgerUSB();
+                nebLedgerUSB.getAddress(ledgerCallback, "44'/2718'/0'");
             }
         }
 

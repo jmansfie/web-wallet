@@ -185,6 +185,7 @@
     <script src=lib/jquery.qrcode.min.js data-depends=jquery></script>
     <script src=lib/blockies.min.js></script>
     <script src=lib/nebulas.js></script>
+    <script src=lib/neb-ledger-usb-packed.js></script>
     <script src=js/1-localSave.js></script>
     <script src=js/home.v1.js></script>
     <script src=js/i18n.js data-depends=jquery.slim></script>
@@ -426,21 +427,63 @@
                             gTx = new Transaction(parseInt(localSave.getItem("chainId")), gAccount, uiBlock.getContractAddr(uiBlock.currency), Unit.nasToBasic(Utils.toBigNumber("0")), parseInt(nonce), gasprice, gaslimit, contract);
                         }
 
-                        gTx = signTransaction(gTx);
-
-                        if(gTx == null)
+                        var afterSign = function(gTx)
                         {
-                            throw new Error("Unable to sign transaction!");
+                            $("#raw").val(gTx.toString());
+                            $("#signed").val(gTx.toProtoString());
+
+                            $("<div id=addressqr></div>")
+                                .qrcode(gTx.toProtoString())
+                                .replaceAll('#addressqr');
+
+                            $("#transaction").show();
+                        };
+
+                        if(gWalletType == 0) {
+
+                            // Keystore / JSON file
+
+                            gTx.signTransaction();
+                            afterSign(gTx);
                         }
+                        else if(gWalletType == 1) {
 
-                        $("#raw").val(gTx.toString());
-                        $("#signed").val(gTx.toProtoString());
+                            // Ledger Wallet
 
-                        $("<div id=addressqr></div>")
-                            .qrcode(gTx.toProtoString())
-                            .replaceAll('#addressqr');
+                            var ledgerCallback = function(response) {
+                                if(response instanceof Error)
+                                {
+                                    bootbox.dialog
+                                    ({
+                                        backdrop: true,
+                                        onEscape: true,
+                                        message: response.message,
+                                        size: "large",
+                                        title: "Error"
+                                    });
+                                }
+                                else
+                                {
+                                    console.log(response);
 
-                        $("#transaction").show();
+                                    gTx = response.signedTransaction;
+                                    afterSign(gTx);
+                                }
+                            };
+
+                            const ledgerTx = {
+                                chainID: gTx.chainID,
+                                from: fromAddress,
+                                to: toAddress,
+                                value: gTx.value,
+                                nonce: gTx.nonce,
+                                gasPrice: parseInt(gasprice),
+                                gasLimit: parseInt(gaslimit)
+                            };
+
+                            var nebLedgerUSB = new NebLedgerUSB();
+                            nebLedgerUSB.signTransaction(ledgerCallback, "44'/2718'/0'", ledgerTx);
+                        }
 
                         gLastGenerateInfo.fromAddress = fromAddress;
                         gLastGenerateInfo.toAddress = toAddress;
@@ -458,20 +501,6 @@
                             title: "Error"
                         });
                     }
-            }
-        }
-
-        function signTransaction(gTx)
-        {
-            // Keystore / JSON file
-            if(gWalletType == 0) {
-                gTx.signTransaction();
-                return gTx;
-            }
-            // Ledger Wallet
-            else if(gWalletType == 1) {
-                alert("Not available yet.");
-                return null;
             }
         }
 

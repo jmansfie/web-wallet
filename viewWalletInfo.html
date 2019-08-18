@@ -97,6 +97,7 @@
     <script src=lib/Blob.js></script>
     <script src=lib/FileSaver.min.js></script>
     <script src=lib/nebulas.js></script>
+    <script src=lib/neb-ledger-usb-packed.js></script>
     <script src=js/1-localSave.js></script>
     <script src=js/home.v1.js></script>
     <script src=js/i18n.js data-depends=jquery.slim></script>
@@ -195,6 +196,9 @@
                 gFileJson = fileJson;
                 account.fromKey(fileJson, password);
 
+                $("#password").val(account.getPrivateKeyString());
+                $("#privateqr").html('').qrcode(account.getPrivateKeyString());
+
                 loadAccount(swf, fileJson, account, password);
             } catch (e) {
                 // this catches e thrown by nebulas.js!account
@@ -215,9 +219,7 @@
 
                 $("#address").val(account.getAddressString());
                 $("#sideaddress").text(account.getAddressString());
-                $("#password").val(account.getPrivateKeyString());
                 $("#addressqr").html('').qrcode(account.getAddressString());
-                $("#privateqr").html('').qrcode(account.getPrivateKeyString());
 
                 $("#password").prop("type", "password");
                 $(".key_qr").addClass("display-none");
