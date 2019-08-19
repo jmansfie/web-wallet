@@ -351,6 +351,19 @@ var uiBlock = function () {
                 .on("click", "input[type=button]", onClick));
 
             function onClick() {
+                if(window.location.protocol !== "https:" && window.location.protocol !== "http:")
+                {
+                    bootbox.dialog
+                    ({
+                        backdrop: true,
+                        onEscape: true,
+                        message: "Ledger functionality requires use of HTTP server.",
+                        size: "large",
+                        title: "Error"
+                    });
+                    return;
+                }
+
                 var ledgerCallback = function(response) {
                     if(response instanceof Error)
                     {
