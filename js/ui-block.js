@@ -9,6 +9,8 @@ var uiBlock = function () {
     var MAIN_NET_NAT_CONTRACT_ADDR = "n1mpgNi6KKdSzr7i5Ma7JsG5yPY9knf9He7";
     var TEST_NET_NAT_CONTRACT_ADDR = "n22PdtQepev7rcQgy3zqfdAkNPN2pSpywZ8";
 
+    var ledgerOperationInProgress = false;
+
     var old$fnModal = $.fn.modal;
 
     $.fn.modal = $fnModal;
@@ -24,6 +26,7 @@ var uiBlock = function () {
         getContractAddr: getContractAddr,
         getCurrencyByContractAddr: getCurrencyByContractAddr,
         isNRC20ContractAddr: isNRC20ContractAddr,
+        ledgerOperationInProgress: ledgerOperationInProgress
     };
 
     function $fnModal(s) {
@@ -351,7 +354,13 @@ var uiBlock = function () {
                 .on("click", "input[type=button]", onClick));
 
             function onClick() {
+                if(ledgerOperationInProgress)
+                    return;
+
+                ledgerOperationInProgress = true;
+
                 var ledgerCallback = function(response) {
+                    ledgerOperationInProgress = false;
                     if(response instanceof Error)
                     {
                         bootbox.dialog

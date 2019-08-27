@@ -392,6 +392,9 @@
         function onClickGenerate() {
             var fromAddress, toAddress, balance, amount, gaslimit, gasprice, nonce, bnAmount;
 
+            if(uiBlock.ledgerOperationInProgress)
+                return;
+
             if (validateAll()) {
                 fromAddress = $(".icon-address.from input").val();
                 toAddress = $(".icon-address.to input").val();
@@ -408,6 +411,7 @@
                     gLastGenerateInfo.gaslimit != gaslimit ||
                     gLastGenerateInfo.gasprice != gasprice ||
                     gLastGenerateInfo.nonce != nonce) try {  //TODO: 加括号
+
                         var tmp = Unit.fromBasic(Utils.toBigNumber(gaslimit)
                             .times(Utils.toBigNumber(gasprice)), "nas");
 
@@ -419,12 +423,13 @@
 
                         var a = amount.split(".");
                         var amountValid = a.length == 1 || a[1].length <= 18;
+                        var contract = null;
                         if (uiBlock.currency == "NAS") {
                             if (!amountValid) throw new Error("Invalid value! The minimum unit is wei (1^-18nas) ");
                             gTx = new Transaction(parseInt(localSave.getItem("chainId")), gAccount, toAddress, Unit.nasToBasic(Utils.toBigNumber(amount)), parseInt(nonce), gasprice, gaslimit);
                         } else {
                             if (!amountValid) throw new Error("Invalid value! The minimum unit is wei (1^-18" + uiBlock.currency.toLowerCase() + ") ");
-                            var contract = {"source": "", "sourceType": "js", "function": "transfer", "args": "[\"" + toAddress + "\", \"" + Unit.nasToBasic(Utils.toBigNumber(amount)).toString(10) + "\"]", "binary": "", "type": "call"};
+                            contract = {"source": "", "sourceType": "js", "function": "transfer", "args": "[\"" + toAddress + "\", \"" + Unit.nasToBasic(Utils.toBigNumber(amount)).toString(10) + "\"]", "binary": "", "type": "call"};
                             gTx = new Transaction(parseInt(localSave.getItem("chainId")), gAccount, uiBlock.getContractAddr(uiBlock.currency), Unit.nasToBasic(Utils.toBigNumber("0")), parseInt(nonce), gasprice, gaslimit, contract);
                         }
 
@@ -438,6 +443,14 @@
                                 .replaceAll('#addressqr');
 
                             $("#transaction").show();
+
+                            gLastGenerateInfo.fromAddress = fromAddress;
+                            gLastGenerateInfo.toAddress = toAddress;
+                            gLastGenerateInfo.balance = balance;
+                            gLastGenerateInfo.amount = amount;
+                            gLastGenerateInfo.gaslimit = gaslimit;
+                            gLastGenerateInfo.gasprice = gasprice;
+                            gLastGenerateInfo.nonce = nonce;
                         };
 
                         if(gWalletType == 0) {
@@ -451,7 +464,14 @@
 
                             // Ledger Wallet
 
+                            uiBlock.ledgerOperationInProgress = true;
+                            $('#generate').prop('disabled', true);
+                            $("#transaction").hide();
+
                             var ledgerCallback = function(response) {
+                                uiBlock.ledgerOperationInProgress = false;
+                                $('#generate').prop('disabled', false);
+
                                 if(response instanceof Error)
                                 {
                                     bootbox.dialog
@@ -463,8 +483,7 @@
                                         title: "Error"
                                     });
                                 }
-                                else
-                                {
+                                else {
                                     console.log(response);
 
                                     gTx = response.signedTransaction;
@@ -475,24 +494,17 @@
                             const ledgerTx = {
                                 chainID: gTx.chainID,
                                 from: fromAddress,
-                                to: toAddress,
+                                to: gTx.to.getAddressString(),
                                 value: gTx.value,
                                 nonce: gTx.nonce,
                                 gasPrice: parseInt(gasprice),
-                                gasLimit: parseInt(gaslimit)
+                                gasLimit: parseInt(gaslimit),
+                                contract: contract
                             };
 
                             var nebLedgerUSB = new NebLedgerUSB();
                             nebLedgerUSB.signTransaction(ledgerCallback, "44'/2718'/0'", ledgerTx);
                         }
-
-                        gLastGenerateInfo.fromAddress = fromAddress;
-                        gLastGenerateInfo.toAddress = toAddress;
-                        gLastGenerateInfo.balance = balance;
-                        gLastGenerateInfo.amount = amount;
-                        gLastGenerateInfo.gaslimit = gaslimit;
-                        gLastGenerateInfo.gasprice = gasprice;
-                        gLastGenerateInfo.nonce = nonce;
                     } catch (e) {
                         bootbox.dialog({
                             backdrop: true,

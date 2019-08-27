@@ -23,6 +23,7 @@ Nebulas already has a JavaScript library [neb.js](https://github.com/nebulasio/n
 - view transaction status & info;
 - deploy/call smart contract;
 - choose nebulas network(Mainnet, Testnet etc.).
+- ledger nano support
 
 ### TODO list
 - Multiple wallet address import methods.
@@ -30,6 +31,26 @@ Nebulas already has a JavaScript library [neb.js](https://github.com/nebulasio/n
 
 
 Thanks to @luoman for implementing a pre-version [naswallet](https://github.com/nebulasio/explorer/tree/master/nasWallet) for us.
+
+## Ledger Support
+
+The WebUSB driver used to communicate with the Ledger device does not work from a file:// url and requires the use of a HTTP server.
+
+A simple way to host the files locally is to [install python](https://docs.python-guide.org/starting/installation/) and run this command from the root directory of Web Wallet: 
+
+If you have python v2 installed:
+```
+python2 -m SimpleHTTPServer
+```
+
+If you have python v3 installed:
+```
+python3 -m http.server
+```
+
+You should then be able to access Web Wallet in your browser from the domain [http://localhost:8000](http://localhost:8000).
+
+Alternatively, you could access a hosted version of web wallet here: [https://nebwallet.io](https://nebwallet.io) (**Note: Not recommended as this website is not affiliated with Nebulas. Use at your own risk.**)
 
 ## Contribution
 
