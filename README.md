@@ -50,8 +50,6 @@ python3 -m http.server
 
 You should then be able to access Web Wallet in your browser from the domain [http://localhost:8000](http://localhost:8000).
 
-Alternatively, you could access a hosted version of web wallet here: [https://nebwallet.io](https://nebwallet.io) (**Note: Not recommended as this website is not affiliated with Nebulas. Use at your own risk.**)
-
 ## Contribution
 
 We are very glad that you are considering to help Nebulas Team, including but not limited to source code, documents or others.
