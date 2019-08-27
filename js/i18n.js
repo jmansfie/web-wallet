@@ -90,6 +90,8 @@ var i18n = function () {
 			"send-offline/step3": "Step 3: Send / Publish Transaction (Online Computer)",
 			"sw/button": "CONNECT TO LEDGER WALLET...",
 			"sw/name": "Connect to Ledger Wallet:",
+			"sw/ledger-info": "Ledger device may take up to 60 seconds to respond in some cases.\n" +
+							  "Please be patient while connecting to your wallet and signing transactions.",
 			"swf/button": "SELECT WALLET FILE...",
 			"swf/good": "Your wallet is encrypted. Good! Please enter the password.",
 			"swf/modal/select/message": "please upload your wallet file, thanks",

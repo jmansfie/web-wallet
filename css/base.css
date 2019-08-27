@@ -242,3 +242,7 @@ label > i {
     outline: 0;
     z-index: 4;
 }
+
+.wallet_help {
+    font-size: 0.8rem;
+}

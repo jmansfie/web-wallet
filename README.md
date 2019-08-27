@@ -34,7 +34,7 @@ Thanks to @luoman for implementing a pre-version [naswallet](https://github.com/
 
 ## Ledger Support
 
-The WebUSB driver used to communicate with the Ledger device does not work from a file:// url and requires the use of a HTTP server.
+The WebUSB driver used to communicate with the Ledger device does not work from a file:// url and requires the use of a local HTTP server.
 
 A simple way to host the files locally is to [install python](https://docs.python-guide.org/starting/installation/) and run this command from the root directory of Web Wallet: 
 
