@@ -2,13 +2,14 @@
 # web-wallet
 
 How to use the Web Wallet
-Part 1 - [Create a NAS Wallet](https://medium.com/nebulasio/creating-a-nas-wallet-9d01b5fa2df6)
-Part 2 - [Sending NAS and ATP from your Wallet](https://medium.com/nebulasio/sending-nas-from-your-wallet-be1b958c4e5d)
-Part 3 - [Signing a Transaction Offline](https://medium.com/nebulasio/signing-a-transaction-offline-ae8278f45201)
-Part 4 - [View Wallet Information](https://medium.com/nebulasio/view-wallet-information-fcea3ea35d94)
-Part 5 - [Check TX Status](https://medium.com/nebulasio/check-tx-status-8dc7dd9b79de)
-Part 6 - [Deploy a Smart Contract](https://medium.com/nebulasio/deploy-a-smart-contract-1e781e13c22e)
-Part 7 - [Call a Smart Contract on Nebulas](https://medium.com/@ottokafka/call-a-smart-contract-on-nebulas-3522038aec18)
+
+- Part 1 - [Create a NAS Wallet](https://medium.com/nebulasio/creating-a-nas-wallet-9d01b5fa2df6)
+- Part 2 - [Sending NAS and ATP from your Wallet](https://medium.com/nebulasio/sending-nas-from-your-wallet-be1b958c4e5d)
+- Part 3 - [Signing a Transaction Offline](https://medium.com/nebulasio/signing-a-transaction-offline-ae8278f45201)
+- Part 4 - [View Wallet Information](https://medium.com/nebulasio/view-wallet-information-fcea3ea35d94)
+- Part 5 - [Check TX Status](https://medium.com/nebulasio/check-tx-status-8dc7dd9b79de)
+- Part 6 - [Deploy a Smart Contract](https://medium.com/nebulasio/deploy-a-smart-contract-1e781e13c22e)
+- Part 7 - [Call a Smart Contract on Nebulas](https://medium.com/@ottokafka/call-a-smart-contract-on-nebulas-3522038aec18)
 
 Nebulas wallet for the web. Nebulas users can use it to send transactions and submit smart contracts.
 
@@ -23,7 +24,7 @@ Nebulas already has a JavaScript library [neb.js](https://github.com/nebulasio/n
 - view transaction status & info;
 - deploy/call smart contract;
 - choose nebulas network(Mainnet, Testnet etc.).
-- ledger nano support
+- ledger nano S support
 
 ### TODO list
 - Multiple wallet address import methods.

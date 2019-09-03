@@ -398,7 +398,7 @@ var uiBlock = function () {
                 };
 
                 var nebLedgerUSB = new NebLedgerUSB();
-                nebLedgerUSB.getAddress(ledgerCallback, "44'/2718'/0'");
+                nebLedgerUSB.verifyAddress(ledgerCallback, "44'/2718'/0'");
             }
         }
 
